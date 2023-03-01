@@ -73,8 +73,8 @@ def test_get_dog_breeds_list_images(breeds):
         validate(instance=r.json(), schema=schema)
 
 
-def test_get_random_define_dog_breeds_image(get_random_breed):
-    r = requests.get(host + '/breed/' + get_random_breed + '/images/random')
+def test_get_random_define_dog_breeds_image(get_random_dog_breed):
+    r = requests.get(host + '/breed/' + get_random_dog_breed + '/images/random')
     schema = {
         "type": "object",
         "properties": {
