@@ -17,3 +17,21 @@ def get_random_brewery_id():
     for brewery in r:
         var = brewery_ids.append(brewery['id'])
     return brewery_ids[random.randint(1, len(brewery_ids) - 1)]
+
+
+@pytest.fixture
+def get_random_brewery_city():
+    r = requests.get('https://api.openbrewerydb.org/breweries').json()
+    brewery_city = []
+    for brewery in r:
+        var = brewery_city.append(brewery['city'])
+    return brewery_city[random.randint(1, len(brewery_city) - 1)]
+
+
+@pytest.fixture
+def get_random_brewery_country():
+    r = requests.get('https://api.openbrewerydb.org/breweries').json()
+    brewery_country = []
+    for brewery in r:
+        var = brewery_country.append(brewery['country'])
+    return brewery_country[random.randint(1, len(brewery_country) - 1)]
