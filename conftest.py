@@ -35,3 +35,22 @@ def get_random_brewery_country():
     for brewery in r:
         var = brewery_country.append(brewery['country'])
     return brewery_country[random.randint(1, len(brewery_country) - 1)]
+
+
+@pytest.fixture
+def get_random_id_json_placeholder_posts():
+    r = requests.get('https://jsonplaceholder.typicode.com/posts').json()
+    posts_ids = []
+    for ids in r:
+        posts_ids.append(ids['id'])
+    return random.choice(posts_ids)
+
+
+@pytest.fixture
+def get_random_userid_json_placeholder_posts():
+    r = requests.get('https://jsonplaceholder.typicode.com/posts').json()
+    user_ids = []
+    for ids in r:
+        user_ids.append(ids['userId'])
+    unique_numbers = list(set(user_ids))
+    return random.choice(unique_numbers)
