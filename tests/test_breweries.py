@@ -1,31 +1,55 @@
-import random
-
 import requests
 from jsonschema import validate
 import pytest
 
 from conftest import get_random_brewery_city, get_random_brewery_country
 
-host = 'https://api.openbrewerydb.org/'
+host = 'https://api.openbrewerydb.org/v1'
 
 schema_breweries_info = {
+    "type": "object",
+    "properties": {
+        "id": {"type": "string"},
+        "name": {"type": "string"},
+        "brewery_type": {"type": "string"},
+        "street": {"type": ["string", "null"]},
+        "address_1": {"type": ["string", "null"]},
+        "address_2": {"type": ["string", "null"]},
+        "address_3": {"type": ["string", "null"]},
+        "city": {"type": ["string", "null"]},
+        "state": {"type": ["string", "null"]},
+        "county_province": {"type": ["string", "null"]},
+        "postal_code": {"type": ["string", "null"]},
+        "country": {"type": ["string", "null"]},
+        "longitude": {"type": ["string", "null"]},
+        "latitude": {"type": ["string", "null"]},
+        "phone": {"type": ["string", "null"]},
+        "website_url": {"type": ["string", "null"]},
+        "updated_at": {"type": "string"},
+        "created_at": {"type": "string"}
+    },
+    "required": ["id", "name", "brewery_type"]
+}
+
+schema_random_breweries_info = {
     "type": "array",
     "properties": {
         "id": {"type": "string"},
         "name": {"type": "string"},
         "brewery_type": {"type": "string"},
-        "street": {"type": "string"},
-        "address_2": {"type": "string"},
-        "address_3": {"type": "string"},
-        "city": {"type": "string"},
-        "state": {"type": "string"},
-        "county_province": {"type": "string"},
-        "postal_code": {"type": "string"},
-        "country": {"type": "string"},
-        "longitude": {"type": "string"},
-        "latitude": {"type": "string"},
-        "phone": {"type": "string"},
-        "website_url": {"type": "string"},
+        "street": {"type": ["string", "null"]},
+        "address_1": {"type": ["string", "null"]},
+        "address_2": {"type": ["string", "null"]},
+        "address_3": {"type": ["string", "null"]},
+        "city": {"type": ["string", "null"]},
+        "state": {"type": ["string", "null"]},
+        "county_province": {"type": ["string", "null"]},
+        "postal_code": {"type": ["string", "null"]},
+        "country": {"type": ["string", "null"]},
+        "longitude": {"type": ["string", "null"]},
+        "latitude": {"type": ["string", "null"]},
+        "phone": {"type": ["string", "null"]},
+        "website_url": {"type": ["string", "null"]},
         "updated_at": {"type": "string"},
         "created_at": {"type": "string"}
     },
@@ -42,14 +66,12 @@ def test_get_brewery_info_by_id(get_random_brewery_id):
     r = requests.get(host + '/breweries/' + get_random_brewery_id)
     assert r.status_code == 200
     validate(instance=r.json(), schema=schema_breweries_info)
-    # ПОЧЕМУ НЕ РАБОТАЕТ?
 
 
 def test_get_brewery_info_by_random():
     r = requests.get(host + '/breweries/random')
     assert r.status_code == 200
-    validate(instance=r.json(), schema=schema_breweries_info)
-    # ПОЧЕМУ НЕ РАБОТАЕТ?
+    validate(instance=r.json(), schema=schema_random_breweries_info)
 
 
 @pytest.mark.parametrize("search_params", [get_random_brewery_city, get_random_brewery_country],

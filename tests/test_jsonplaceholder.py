@@ -23,14 +23,14 @@ schema_one_post = {
 }
 
 schema_list_posts = {
-        "type": "array",
-        "properties": {
-            "body": {"type": "string"},
-            "id": {"type": "integer"},
-            "title": {"type": "string"},
-            "userId": {"type": "integer"}
-        }
+    "type": "array",
+    "properties": {
+        "body": {"type": "string"},
+        "id": {"type": "integer"},
+        "title": {"type": "string"},
+        "userId": {"type": "integer"}
     }
+}
 
 
 def test_get_list_posts():

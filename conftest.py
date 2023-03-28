@@ -54,3 +54,27 @@ def get_random_userid_json_placeholder_posts():
         user_ids.append(ids['userId'])
     unique_numbers = list(set(user_ids))
     return random.choice(unique_numbers)
+
+
+def pytest_addoption(parser):
+    parser.addoption(
+        "--url",
+        default="https://ya.ru",
+        help="This is request url"
+    )
+
+    parser.addoption(
+        "--status_code",
+        default="200",
+        help="response status code"
+    )
+
+
+@pytest.fixture
+def base_url(request):
+    return request.config.getoption("--url")
+
+
+@pytest.fixture
+def status_code(request):
+    return request.config.getoption("--status_code")
